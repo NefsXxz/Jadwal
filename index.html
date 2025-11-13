@@ -3,780 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PR Manager - MAN BARITO UTARA</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Pengingat PR - MAN BARITO UTARA</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
-
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #f72585;
-            --success: #4cc9f0;
-            --warning: #f8961e;
-            --danger: #e63946;
-        }
-
+        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
+            background: #f0f2f5;
             padding: 20px;
         }
-
+        
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
+        
         header {
-            background: white;
-            color: var(--primary);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 25px;
             text-align: center;
-        }
-
-        .school-info h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .school-info p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .header-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .notification-status {
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .notification-enabled {
-            background: rgba(76, 201, 240, 0.2);
-            color: var(--success);
-        }
-
-        .notification-disabled {
-            background: rgba(230, 57, 70, 0.2);
-            color: var(--danger);
-        }
-
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .tabs {
-            display: flex;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .tab.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 25px;
-        }
-
-        h2 {
-            color: var(--primary);
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
-
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .notification-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
         .form-group {
             margin-bottom: 15px;
         }
-
+        
         label {
             display: block;
             margin-bottom: 5px;
-            font-weight: 500;
+            font-weight: bold;
         }
-
+        
         input, select, textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
+        
         textarea {
-            min-height: 80px;
-            resize: vertical;
+            height: 80px;
         }
-
-        .btn-submit {
-            background: var(--primary);
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-
-        .task-list {
-            list-style: none;
-        }
-
+        
         .task-item {
             background: #f8f9fa;
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
         }
-
+        
         .task-info h3 {
             margin-bottom: 5px;
         }
-
+        
         .task-meta {
-            font-size: 0.9rem;
+            font-size: 0.9em;
             color: #666;
+            margin-bottom: 10px;
         }
-
-        .task-actions {
-            display: flex;
-            gap: 10px;
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-left: 10px;
         }
-
-        .btn-delete {
-            background: var(--danger);
+        
+        .status-enabled {
+            background: #d4edda;
+            color: #155724;
         }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        .urgent {
-            border-left-color: var(--danger);
-        }
-
-        .soon {
-            border-left-color: var(--warning);
-        }
-
-        .schedule-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .schedule-table th, .schedule-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .schedule-table th {
-            background: var(--primary);
-            color: white;
-        }
-
-        .schedule-table tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        .break-row {
-            background: #e9ecef !important;
-            font-weight: bold;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: white;
-            padding: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .task-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .task-actions {
-                margin-top: 15px;
-                width: 100%;
-                justify-content: flex-end;
-            }
-            
-            .tabs {
-                flex-direction: column;
-            }
+        
+        .status-disabled {
+            background: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="school-info">
-                <h1>
-                    <i class="fas fa-graduation-cap"></i>
-                    MAN BARITO UTARA
-                </h1>
-                <p>Kelas X.9 ATAS - Semester 1 TP 2025/2026</p>
-                
-                <div class="header-controls">
-                    <div id="notificationStatus" class="notification-status notification-disabled">
-                        <i class="fas fa-bell"></i> 
-                        <span>Notifikasi: Belum Diizinkan</span>
-                    </div>
-                    
-                    <button id="testNotification" class="btn btn-outline">
-                        <i class="fas fa-bell"></i> Tes Notifikasi
-                    </button>
+            <h1>📚 Pengingat PR</h1>
+            <p>MAN BARITO UTARA - Kelas X.9 ATAS</p>
+            
+            <div class="notification-controls">
+                <button class="btn btn-primary" onclick="requestNotificationPermission()">
+                    🔔 Minta Izin Notifikasi
+                </button>
+                <button class="btn btn-success" onclick="testNotification()">
+                    🧪 Tes Notifikasi Sekarang
+                </button>
+                <div id="notificationStatus" class="status status-disabled">
+                    Notifikasi: Belum Diizinkan
                 </div>
             </div>
         </header>
 
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab('schedule')">
-                <i class="fas fa-calendar-alt"></i> Jadwal Pelajaran
-            </div>
-            <div class="tab" onclick="switchTab('reminder')">
-                <i class="fas fa-tasks"></i> Pengingat PR
-            </div>
-        </div>
-
-        <div id="schedule" class="tab-content active">
-            <div class="card">
-                <h2><i class="fas fa-table"></i> Jadwal Pelajaran</h2>
-                <div style="overflow-x: auto;">
-                    <table class="schedule-table" id="classSchedule">
-                        <!-- Jadwal akan diisi oleh JavaScript -->
-                    </table>
+        <div class="card">
+            <h2>➕ Tambah PR Baru</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="subject">Mata Pelajaran</label>
+                    <input type="text" id="subject" placeholder="Contoh: Matematika" required>
                 </div>
-            </div>
+                
+                <div class="form-group">
+                    <label for="taskDescription">Detail Tugas</label>
+                    <textarea id="taskDescription" placeholder="Jelaskan tugas yang harus dikerjakan..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dueDate">Tanggal Pengumpulan</label>
+                    <input type="date" id="dueDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dueTime">Waktu Pengumpulan</label>
+                    <input type="time" id="dueTime" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reminderTime">Ingatkan Saya</label>
+                    <select id="reminderTime">
+                        <option value="1">1 menit (testing)</option>
+                        <option value="2">2 menit (testing)</option>
+                        <option value="15">15 menit sebelumnya</option>
+                        <option value="30">30 menit sebelumnya</option>
+                        <option value="60">1 jam sebelumnya</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    💾 Simpan Pengingat
+                </button>
+            </form>
         </div>
 
-        <div id="reminder" class="tab-content">
-            <div class="card">
-                <h2><i class="fas fa-plus-circle"></i> Tambah PR Baru</h2>
-                <form id="taskForm">
-                    <div class="form-group">
-                        <label for="day"><i class="fas fa-calendar-day"></i> Hari</label>
-                        <select id="day" required onchange="updateSubjects()">
-                            <option value="">Pilih Hari</option>
-                            <option value="Senin">Senin</option>
-                            <option value="Selasa">Selasa</option>
-                            <option value="Rabu">Rabu</option>
-                            <option value="Kamis">Kamis</option>
-                            <option value="Jumat">Jumat</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject"><i class="fas fa-book"></i> Mata Pelajaran</label>
-                        <select id="subject" required onchange="updateTeacher()">
-                            <option value="">Pilih Mata Pelajaran</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="teacher"><i class="fas fa-chalkboard-teacher"></i> Nama Guru</label>
-                        <input type="text" id="teacher" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="taskDescription"><i class="fas fa-clipboard-list"></i> Detail Tugas</label>
-                        <textarea id="taskDescription" placeholder="Contoh: Mengerjakan soal halaman 1-5, membuat rangkuman bab 2, dll." required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dueDate"><i class="fas fa-calendar-check"></i> Tanggal Pengumpulan</label>
-                        <input type="date" id="dueDate" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dueTime"><i class="fas fa-clock"></i> Waktu Pengumpulan</label>
-                        <input type="time" id="dueTime" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="priority"><i class="fas fa-exclamation-circle"></i> Prioritas</label>
-                        <select id="priority">
-                            <option value="normal">Normal</option>
-                            <option value="soon">Segera</option>
-                            <option value="urgent">Mendesak</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="reminderTime"><i class="fas fa-bell"></i> Ingatkan Saya</label>
-                        <select id="reminderTime">
-                            <option value="2">2 menit (testing)</option>
-                            <option value="15">15 menit sebelumnya</option>
-                            <option value="30">30 menit sebelumnya</option>
-                            <option value="60">1 jam sebelumnya</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-submit">
-                        <i class="fas fa-plus"></i> Tambah Pengingat PR
-                    </button>
-                </form>
-            </div>
-            
-            <div class="card">
-                <h2><i class="fas fa-list-check"></i> Daftar PR Saya</h2>
-                <ul id="taskList" class="task-list">
-                    <li class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Belum ada PR</h3>
-                        <p>Tambahkan PR pertama Anda untuk memulai</p>
-                    </li>
-                </ul>
+        <div class="card" style="margin-top: 20px;">
+            <h2>📋 Daftar PR Saya</h2>
+            <div id="taskList">
+                <p style="text-align: center; color: #666; padding: 20px;">
+                    Belum ada PR. Tambahkan PR pertama Anda!
+                </p>
             </div>
         </div>
-        
-        <footer>
-            <p><i class="fas fa-copyright"></i> 2025 MAN BARITO UTARA - Aplikasi Pengingat PR & Jadwal Pelajaran</p>
-        </footer>
     </div>
 
     <script>
-        // Data jadwal pelajaran
-        const scheduleData = {
-            days: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
-            times: ['06:30-07:15', '07:15-08:00', '08:00-08:45', '08:45-09:30', '09:30-09:45', '09:45-10:30', '10:30-11:15', '11:15-11:30', '11:30-12:15', '12:15-13:00', '13:00-13:45', '13:45-14:30', '14:30-14:45', '14:45-15:30', '15:30-16:15'],
-            subjects: [
-                // Senin
-                ['Upacara', 'Informatika', 'IPS Sejarah', 'IPS Sejarah', 'ISTIRAHAT 1', 'IPA Kimia', 'IPA Kimia', 'ISTIRAHAT 2', 'IPA Biologi', 'IPA Biologi', 'Tahfidz', 'Tahfidz', 'ISTIRAHAT 3', 'Al Qur\'an Hadist', 'Al Qur\'an Hadist'],
-                // Selasa
-                ['Bahasa Indonesia', 'Bahasa Indonesia', 'Pendidikan Pancasila PKN', 'Pendidikan Pancasila PKN', 'ISTIRAHAT 1', 'Sejarah', 'Sejarah', 'ISTIRAHAT 2', 'Informatika', 'Matematika', 'Matematika', 'Matematika', 'ISTIRAHAT 3', '', ''],
-                // Rabu
-                ['Sejarah Kebudayaan Islam SKI', 'Sejarah Kebudayaan Islam SKI', 'Bahasa Arab', 'Bahasa Arab', 'ISTIRAHAT 1', 'Akidah Akhlak', 'Akidah Akhlak', 'ISTIRAHAT 2', 'IPS Geografi', 'IPS Geografi', 'Fikih', 'Fikih', 'ISTIRAHAT 3', '', ''],
-                // Kamis
-                ['Bahasa Inggris', 'Bahasa Inggris', 'Bahasa Inggris', 'Bahasa Indonesia', 'ISTIRAHAT 1', 'IPA Fisika', 'IPA Fisika', 'ISTIRAHAT 2', 'Seni Budaya', 'Seni Budaya', 'IPS Ekonomi', 'IPS Ekonomi', 'ISTIRAHAT 3', '', ''],
-                // Jumat
-                ['PJOK', 'PJOK', 'IPS Sosiologi', 'IPS Sosiologi', 'ISTIRAHAT 1', 'Bahasa Arab', 'Bahasa Arab', 'ISTIRAHAT 2', '', '', '', '', '', '', '']
-            ],
-            teachers: [
-                // Senin
-                ['', 'Putri Fadillah', 'Mariana, S.PD', 'Mariana, S.PD', '', 'Annisa Wahyuliani, S.PD', 'Annisa Wahyuliani, S.PD', '', 'Indah Permata, S.PD', 'Indah Permata, S.PD', 'Novita Prahesti, S.PD', 'Novita Prahesti, S.PD', '', 'Muhibbah, S.Ag', 'Muhibbah, S.Ag'],
-                // Selasa
-                ['Iin Parlina, S.PD', 'Iin Parlina, S.PD', 'Abda Rani Puspitasari, S.PD', 'Abda Rani Puspitasari, S.PD', '', 'Amiratul Jannati, S.PD', 'Amiratul Jannati, S.PD', '', 'Putri Fadillah', 'Rizki Alam, S.PD', 'Rizki Alam, S.PD', 'Rizki Alam, S.PD', '', '', ''],
-                // Rabu
-                ['Vika Mayasari, S.PD', 'Vika Mayasari, S.PD', 'Abdul Bari, S.PD.I', 'Abdul Bari, S.PD.I', '', 'Norsam, S.Ag, M.PD.', 'Norsam, S.Ag, M.PD.', '', 'Indra, S.PD', 'Indra, S.PD', 'Muhibbah, S.Ag', 'Muhibbah, S.Ag', '', '', ''],
-                // Kamis
-                ['Mariya Ulfah, S.Pd.I', 'Mariya Ulfah, S.Pd.I', 'Mariya Ulfah, S.Pd.I', 'Iin Parlina, S.Pd.', '', 'Indriana Wulansari, S.Pd', 'Indriana Wulansari, S.Pd', '', 'Isnawati, S.Pd', 'Isnawati, S.Pd', 'Rahmawati, S.E', 'Rahmawati, S.E', '', '', ''],
-                // Jumat
-                ['Jemy Arisman, S.Pd', 'Jemy Arisman, S.Pd', 'Muhammad', 'Muhammad', '', 'Abdul Bari, S.Pd.I', 'Abdul Bari, S.Pd.I', '', '', '', '', '', '', '', '']
-            ]
-        };
-
-        // Data mapping mata pelajaran dan guru
-        const subjectTeacherMap = {
-            'Senin': {
-                'Informatika': 'Putri Fadillah',
-                'IPS Sejarah': 'Mariana, S.PD',
-                'IPA Kimia': 'Annisa Wahyuliani, S.PD',
-                'IPA Biologi': 'Indah Permata, S.PD',
-                'Tahfidz': 'Novita Prahesti, S.PD',
-                'Al Qur\'an Hadist': 'Muhibbah, S.Ag'
-            },
-            'Selasa': {
-                'Bahasa Indonesia': 'Iin Parlina, S.PD',
-                'Pendidikan Pancasila PKN': 'Abda Rani Puspitasari, S.PD',
-                'Sejarah': 'Amiratul Jannati, S.PD',
-                'Informatika': 'Putri Fadillah',
-                'Matematika': 'Rizki Alam, S.PD'
-            },
-            'Rabu': {
-                'Sejarah Kebudayaan Islam SKI': 'Vika Mayasari, S.PD',
-                'Bahasa Arab': 'Abdul Bari, S.PD.I',
-                'Akidah Akhlak': 'Norsam, S.Ag, M.PD.',
-                'IPS Geografi': 'Indra, S.PD',
-                'Fikih': 'Muhibbah, S.Ag'
-            },
-            'Kamis': {
-                'Bahasa Inggris': 'Mariya Ulfah, S.Pd.I',
-                'Bahasa Indonesia': 'Iin Parlina, S.Pd.',
-                'IPA Fisika': 'Indriana Wulansari, S.Pd',
-                'Seni Budaya': 'Isnawati, S.Pd',
-                'IPS Ekonomi': 'Rahmawati, S.E'
-            },
-            'Jumat': {
-                'PJOK': 'Jemy Arisman, S.Pd',
-                'IPS Sosiologi': 'Muhammad',
-                'Bahasa Arab': 'Abdul Bari, S.Pd.I'
-            }
-        };
-
+        // Variabel global
         let notificationTimeouts = {};
-
-        // Fungsi untuk mengganti tab
-        function switchTab(tabName) {
-            // Sembunyikan semua tab content
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Tampilkan tab yang dipilih
-            document.getElementById(tabName).classList.add('active');
-            
-            // Update tab navigation
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-            
-            // Jika tab jadwal, render ulang jadwal
-            if (tabName === 'schedule') {
-                renderSchedule();
-            }
-        }
-
-        // Render jadwal pelajaran
-        function renderSchedule() {
-            const table = document.getElementById('classSchedule');
-            let html = '<tr><th>Waktu</th>';
-            
-            // Header hari
-            scheduleData.days.forEach(day => {
-                html += `<th>${day}</th>`;
-            });
-            html += '</tr>';
-            
-            // Baris waktu dan mata pelajaran
-            for (let i = 0; i < scheduleData.times.length; i++) {
-                const isBreak = scheduleData.times[i].includes('ISTIRAHAT');
-                html += `<tr class="${isBreak ? 'break-row' : ''}">`;
-                html += `<td>${scheduleData.times[i]}</td>`;
-                
-                for (let j = 0; j < scheduleData.days.length; j++) {
-                    const subject = scheduleData.subjects[j][i];
-                    const teacher = scheduleData.teachers[j][i];
-                    html += `<td>`;
-                    if (subject) {
-                        html += `<div>${subject}</div>`;
-                        if (teacher) {
-                            html += `<div style="font-size:0.8rem;color:#666;">${teacher}</div>`;
-                        }
-                    }
-                    html += `</td>`;
-                }
-                html += '</tr>';
-            }
-            
-            table.innerHTML = html;
-        }
-
-        // Update pilihan mata pelajaran berdasarkan hari
-        function updateSubjects() {
-            const day = document.getElementById('day').value;
-            const subjectSelect = document.getElementById('subject');
-            
-            subjectSelect.innerHTML = '<option value="">Pilih Mata Pelajaran</option>';
-            
-            if (day && subjectTeacherMap[day]) {
-                for (const subject in subjectTeacherMap[day]) {
-                    const option = document.createElement('option');
-                    option.value = subject;
-                    option.textContent = subject;
-                    subjectSelect.appendChild(option);
-                }
-            }
-            
-            document.getElementById('teacher').value = '';
-        }
-
-        // Update nama guru berdasarkan mata pelajaran
-        function updateTeacher() {
-            const day = document.getElementById('day').value;
-            const subject = document.getElementById('subject').value;
-            
-            if (day && subject && subjectTeacherMap[day] && subjectTeacherMap[day][subject]) {
-                document.getElementById('teacher').value = subjectTeacherMap[day][subject];
-            } else {
-                document.getElementById('teacher').value = '';
-            }
-        }
-
-        // Minta izin notifikasi
+        
+        // Fungsi untuk meminta izin notifikasi
         function requestNotificationPermission() {
-            if ('Notification' in window) {
-                Notification.requestPermission().then(permission => {
-                    const status = document.getElementById('notificationStatus');
-                    if (permission === 'granted') {
-                        status.innerHTML = '<i class="fas fa-bell"></i> <span>Notifikasi: Diizinkan</span>';
-                        status.className = 'notification-status notification-enabled';
-                    } else {
-                        status.innerHTML = '<i class="fas fa-bell-slash"></i> <span>Notifikasi: Belum Diizinkan</span>';
-                        status.className = 'notification-status notification-disabled';
-                    }
-                });
-            }
-        }
-
-        // Setup form
-        function setupForm() {
-            const form = document.getElementById('taskForm');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const day = document.getElementById('day').value;
-                const subject = document.getElementById('subject').value;
-                const teacher = document.getElementById('teacher').value;
-                const description = document.getElementById('taskDescription').value;
-                const dueDate = document.getElementById('dueDate').value;
-                const dueTime = document.getElementById('dueTime').value;
-                const priority = document.getElementById('priority').value;
-                const reminderTime = parseInt(document.getElementById('reminderTime').value);
-                
-                // Validasi
-                if (!day || !subject || !description || !dueDate || !dueTime) {
-                    alert('Harap isi semua field yang wajib!');
-                    return;
-                }
-                
-                const dueDateTime = new Date(`${dueDate}T${dueTime}`);
-                if (dueDateTime <= new Date()) {
-                    alert('Tanggal dan waktu pengumpulan harus di masa depan!');
-                    return;
-                }
-                
-                // Buat task
-                const task = {
-                    id: Date.now(),
-                    day,
-                    subject,
-                    teacher,
-                    description,
-                    dueDate: dueDateTime.toISOString(),
-                    priority,
-                    reminderTime
-                };
-                
-                // Simpan dan jadwalkan notifikasi
-                saveTask(task);
-                scheduleNotification(task);
-                
-                // Reset form
-                form.reset();
-                updateSubjects();
-                
-                // Muat ulang daftar
-                loadTasks();
-                
-                alert('PR berhasil ditambahkan!');
-            });
-        }
-
-        // Simpan task
-        function saveTask(task) {
-            const tasks = getTasks();
-            tasks.push(task);
-            localStorage.setItem('schoolTasks', JSON.stringify(tasks));
-        }
-
-        // Ambil tasks
-        function getTasks() {
-            return JSON.parse(localStorage.getItem('schoolTasks')) || [];
-        }
-
-        // Muat tasks
-        function loadTasks() {
-            const tasks = getTasks();
-            const taskList = document.getElementById('taskList');
-            
-            if (tasks.length === 0) {
-                taskList.innerHTML = `
-                    <li class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Belum ada PR</h3>
-                        <p>Tambahkan PR pertama Anda untuk memulai</p>
-                    </li>
-                `;
+            if (!("Notification" in window)) {
+                alert("Browser ini tidak mendukung notifikasi desktop");
                 return;
             }
             
-            taskList.innerHTML = '';
-            tasks.forEach(task => {
-                const dueDate = new Date(task.dueDate);
-                const li = document.createElement('li');
-                li.className = `task-item ${task.priority === 'urgent' ? 'urgent' : task.priority === 'soon' ? 'soon' : ''}`;
-                li.innerHTML = `
-                    <div class="task-info">
-                        <h3>${task.subject} - ${task.day}</h3>
-                        <div class="task-meta">
-                            <strong>Guru:</strong> ${task.teacher} | 
-                            <strong>Batas:</strong> ${dueDate.toLocaleDateString('id-ID')} ${dueDate.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}
-                        </div>
-                        <div style="margin-top:8px; padding:8px; background:#f0f0f0; border-radius:5px;">
-                            <strong>Detail:</strong> ${task.description}
-                        </div>
-                    </div>
-                    <div class="task-actions">
-                        <button class="btn btn-delete" onclick="deleteTask(${task.id})">
-                            <i class="fas fa-trash"></i> Hapus
-                        </button>
-                    </div>
-                `;
-                taskList.appendChild(li);
+            Notification.requestPermission().then(function(permission) {
+                updateNotificationStatus(permission);
+                
+                if (permission === "granted") {
+                    alert("✅ Izin notifikasi diberikan! Sekarang Anda bisa menerima pengingat PR.");
+                } else {
+                    alert("❌ Izin notifikasi ditolak. Anda tidak akan menerima pengingat PR.");
+                }
             });
         }
-
-        // Hapus task
-        function deleteTask(taskId) {
-            if (confirm('Hapus PR ini?')) {
-                if (notificationTimeouts[taskId]) {
-                    clearTimeout(notificationTimeouts[taskId]);
-                    delete notificationTimeouts[taskId];
-                }
-                
-                const tasks = getTasks().filter(task => task.id !== taskId);
-                localStorage.setItem('schoolTasks', JSON.stringify(tasks));
-                loadTasks();
+        
+        // Fungsi untuk memperbarui status notifikasi
+        function updateNotificationStatus(permission) {
+            const statusElement = document.getElementById("notificationStatus");
+            
+            if (permission === "granted") {
+                statusElement.textContent = "Notifikasi: Diizinkan ✅";
+                statusElement.className = "status status-enabled";
+            } else {
+                statusElement.textContent = "Notifikasi: Belum Diizinkan ❌";
+                statusElement.className = "status status-disabled";
             }
         }
-
-        // Jadwalkan notifikasi
+        
+        // Fungsi untuk testing notifikasi
+        function testNotification() {
+            if (Notification.permission !== "granted") {
+                alert("Silakan izinkan notifikasi terlebih dahulu dengan menekan tombol 'Minta Izin Notifikasi'");
+                return;
+            }
+            
+            // Buat notifikasi test
+            const notification = new Notification("🧪 Test Notifikasi Berhasil!", {
+                body: "Notifikasi PR Anda akan muncul seperti ini. Jika tidak muncul, periksa pengaturan browser Anda.",
+                icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233498db'%3E%3Cpath d='M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'/%3E%3C/svg%3E",
+                requireInteraction: true
+            });
+            
+            // Tutup notifikasi setelah 5 detik
+            setTimeout(() => {
+                notification.close();
+            }, 5000);
+        }
+        
+        // Fungsi untuk menyimpan PR
+        function savePR(event) {
+            event.preventDefault();
+            
+            const subject = document.getElementById("subject").value;
+            const description = document.getElementById("taskDescription").value;
+            const dueDate = document.getElementById("dueDate").value;
+            const dueTime = document.getElementById("dueTime").value;
+            const reminderTime = parseInt(document.getElementById("reminderTime").value);
+            
+            // Validasi
+            if (!subject || !description || !dueDate || !dueTime) {
+                alert("Harap isi semua field!");
+                return;
+            }
+            
+            const dueDateTime = new Date(`${dueDate}T${dueTime}`);
+            if (dueDateTime <= new Date()) {
+                alert("Waktu pengumpulan harus di masa depan!");
+                return;
+            }
+            
+            // Buat objek PR
+            const task = {
+                id: Date.now(),
+                subject,
+                description,
+                dueDate: dueDateTime.toISOString(),
+                reminderTime,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Simpan ke localStorage
+            saveTaskToStorage(task);
+            
+            // Jadwalkan notifikasi
+            scheduleNotification(task);
+            
+            // Reset form
+            document.getElementById("taskForm").reset();
+            
+            // Set default waktu untuk next input
+            setDefaultDateTime();
+            
+            // Refresh daftar PR
+            loadTasks();
+            
+            alert("✅ PR berhasil disimpan! Notifikasi akan muncul " + reminderTime + " menit sebelum waktu pengumpulan.");
+        }
+        
+        // Fungsi untuk menyimpan ke localStorage
+        function saveTaskToStorage(task) {
+            const tasks = getTasksFromStorage();
+            tasks.push(task);
+            localStorage.setItem("prTasks", JSON.stringify(tasks));
+        }
+        
+        // Fungsi untuk mengambil dari localStorage
+        function getTasksFromStorage() {
+            return JSON.parse(localStorage.getItem("prTasks")) || [];
+        }
+        
+        // Fungsi untuk menjadwalkan notifikasi
         function scheduleNotification(task) {
-            if (Notification.permission !== 'granted') return;
+            if (Notification.permission !== "granted") {
+                console.log("Izin notifikasi belum diberikan");
+                return;
+            }
             
             const dueDate = new Date(task.dueDate);
             const reminderTime = new Date(dueDate.getTime() - (task.reminderTime * 60 * 1000));
             const now = new Date();
             const timeUntilReminder = reminderTime - now;
             
-            if (timeUntilReminder <= 0) return;
+            console.log("Menjadwalkan notifikasi:", {
+                task: task.subject,
+                dueDate: dueDate.toLocaleString(),
+                reminderTime: reminderTime.toLocaleString(),
+                timeUntilReminder: Math.round(timeUntilReminder / 1000) + " detik"
+            });
+            
+            // Jika waktu sudah lewat, skip
+            if (timeUntilReminder <= 0) {
+                console.log("Waktu notifikasi sudah lewat, tidak menjadwalkan");
+                return;
+            }
             
             const timeoutId = setTimeout(() => {
-                new Notification(`Pengingat PR: ${task.subject}`, {
-                    body: `PR ${task.subject} harus dikumpulkan pada ${dueDate.toLocaleDateString('id-ID')} ${dueDate.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}. Detail: ${task.description}`,
-                    icon: '/favicon.ico'
+                console.log("Menampilkan notifikasi untuk:", task.subject);
+                
+                const notification = new Notification(`📚 Pengingat PR: ${task.subject}`, {
+                    body: `PR "${task.subject}" harus dikumpulkan pada ${dueDate.toLocaleDateString('id-ID')} pukul ${dueDate.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})}\n\nDetail: ${task.description}`,
+                    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e74c3c'%3E%3Cpath d='M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'/%3E%3C/svg%3E",
+                    requireInteraction: true,
+                    tag: `pr-reminder-${task.id}`
                 });
+                
+                // Tutup notifikasi setelah 10 detik
+                setTimeout(() => {
+                    notification.close();
+                }, 10000);
+                
+                // Hapus dari timeout tracker
                 delete notificationTimeouts[task.id];
+                
             }, timeUntilReminder);
             
+            // Simpan timeout ID untuk bisa dibatalkan nanti
             notificationTimeouts[task.id] = timeoutId;
         }
-
-        // Setup test notification
-        function setupTestNotification() {
-            document.getElementById('testNotification').addEventListener('click', function() {
-                if (Notification.permission === 'granted') {
-                    new Notification('Tes Notifikasi', {
-                        body: 'Ini adalah tes notifikasi. Notifikasi PR akan muncul seperti ini.',
-                        icon: '/favicon.ico'
-                    });
-                } else {
-                    requestNotificationPermission();
-                }
+        
+        // Fungsi untuk memuat daftar PR
+        function loadTasks() {
+            const tasks = getTasksFromStorage();
+            const taskList = document.getElementById("taskList");
+            
+            if (tasks.length === 0) {
+                taskList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Belum ada PR. Tambahkan PR pertama Anda!</p>';
+                return;
+            }
+            
+            taskList.innerHTML = "";
+            
+            tasks.forEach(task => {
+                const dueDate = new Date(task.dueDate);
+                const taskElement = document.createElement("div");
+                taskElement.className = "task-item";
+                taskElement.innerHTML = `
+                    <h3>${task.subject}</h3>
+                    <div class="task-meta">
+                        <strong>Batas Waktu:</strong> ${dueDate.toLocaleDateString('id-ID')} pukul ${dueDate.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})} |
+                        <strong>Pengingat:</strong> ${task.reminderTime} menit sebelumnya
+                    </div>
+                    <p>${task.description}</p>
+                    <button class="btn btn-danger" onclick="deleteTask(${task.id})" style="margin-top: 10px;">
+                        🗑️ Hapus
+                    </button>
+                `;
+                taskList.appendChild(taskElement);
             });
         }
-
-        // Set default datetime
+        
+        // Fungsi untuk menghapus PR
+        function deleteTask(taskId) {
+            if (!confirm("Apakah Anda yakin ingin menghapus PR ini?")) {
+                return;
+            }
+            
+            // Batalkan notifikasi yang terjadwal
+            if (notificationTimeouts[taskId]) {
+                clearTimeout(notificationTimeouts[taskId]);
+                delete notificationTimeouts[taskId];
+            }
+            
+            // Hapus dari storage
+            const tasks = getTasksFromStorage().filter(task => task.id !== taskId);
+            localStorage.setItem("prTasks", JSON.stringify(tasks));
+            
+            // Refresh daftar
+            loadTasks();
+            
+            alert("PR berhasil dihapus!");
+        }
+        
+        // Fungsi untuk set default datetime
         function setDefaultDateTime() {
             const now = new Date();
-            now.setMinutes(now.getMinutes() + 2);
+            now.setMinutes(now.getMinutes() + 2); // Default 2 menit dari sekarang
             
-            document.getElementById('dueDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('dueTime').value = now.toTimeString().substring(0, 5);
+            document.getElementById("dueDate").value = now.toISOString().split("T")[0];
+            document.getElementById("dueTime").value = now.toTimeString().substring(0, 5);
         }
-
+        
         // Inisialisasi aplikasi
         function initApp() {
-            renderSchedule();
-            requestNotificationPermission();
-            setupForm();
-            setupTestNotification();
-            loadTasks();
+            // Setup form submit
+            document.getElementById("taskForm").addEventListener("submit", savePR);
+            
+            // Set default datetime
             setDefaultDateTime();
             
-            // Setup hari pertama
-            updateSubjects();
+            // Load existing tasks
+            loadTasks();
+            
+            // Check notification permission status
+            if (Notification.permission === "granted") {
+                updateNotificationStatus("granted");
+            }
+            
+            console.log("Aplikasi siap! Status notifikasi:", Notification.permission);
         }
-
-        // Jalankan aplikasi saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', initApp);
+        
+        // Jalankan ketika halaman dimuat
+        document.addEventListener("DOMContentLoaded", initApp);
     </script>
 </body>
 </html>
