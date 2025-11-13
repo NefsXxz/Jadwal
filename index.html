@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengingat PR & Jadwal Pelajaran - X.9 ATAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6d98d4;
+            --accent: #ff9800;
+            --light: #f5f7fa;
+            --dark: #333;
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .school-info {
+            margin-bottom: 10px;
+        }
+
+        .school-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .school-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .notification-status {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .notification-enabled {
+            background-color: var(--success);
+        }
+
+        .notification-disabled {
+            background-color: var(--danger);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: rgba(74, 111, 165, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-delete {
+            background-color: var(--danger);
+        }
+
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+
+        .task-list {
+            list-style-type: none;
+        }
+
+        .task-item {
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-info h3 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .task-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .urgent {
+            border-left-color: var(--danger);
+        }
+
+        .soon {
+            border-left-color: var(--warning);
+        }
+
+        /* Jadwal Styles */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .schedule-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .schedule-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .schedule-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .time-header {
+            font-weight: bold;
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .break-row {
+            background-color: #e9ecef !important;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .subject-cell {
+            position: relative;
+        }
+
+        .teacher-name {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .current-class {
+            background-color: rgba(255, 152, 0, 0.2) !important;
+            border: 2px solid var(--warning);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .pr-details {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-actions {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .schedule-table {
+                font-size: 0.8rem;
+            }
+
+            .schedule-table th, .schedule-table td {
+                padding: 5px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="school-info">
+                <h1>MAN BARITO UTARA</h1>
+                <p>Kelas X.9 ATAS - Semester 1 TP 2025/2026</p>
+            </div>
+            <div id="notificationStatus" class="notification-status notification-disabled">Notifikasi: Belum Diizinkan</div>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="schedule">Jadwal Pelajaran</div>
+            <div class="tab" data-tab="reminder">Pengingat PR</div>
+        </div>
+
+        <div class="tab-content active" id="schedule">
+            <div class="card">
+                <h2>Jadwal Pelajaran X.9 ATAS</h2>
+                <table class="schedule-table" id="classSchedule">
+                    <!-- Jadwal akan diisi oleh JavaScript -->
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-content" id="reminder">
+            <div class="card">
+                <h2>Tambah PR Baru</h2>
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="day">Hari</label>
+                        <select id="day" required>
+                            <option value="">Pilih Hari</option>
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Mata Pelajaran</label>
+                        <select id="subject" required>
+                            <option value="">Pilih Mata Pelajaran</option>
+                            <!-- Opsi mata pelajaran akan diisi oleh JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher">Nama Guru</label>
+                        <input type="text" id="teacher" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taskDescription">Detail Tugas</label>
+                        <textarea id="taskDescription" placeholder="Contoh: Mengerjakan soal halaman 1-5, membuat rangkuman bab 2, dll." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dueDate">Tanggal Pengumpulan</label>
+                        <input type="date" id="dueDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dueTime">Waktu Pengumpulan</label>
+                        <input type="time" id="dueTime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priority">Prioritas</label>
+                        <select id="priority">
+                            <option value="normal">Normal</option>
+                            <option value="soon">Segera</option>
+                            <option value="urgent">Mendesak</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reminderTime">Ingatkan Saya</label>
+                        <select id="reminderTime">
+                            <option value="15">15 menit sebelumnya</option>
+                            <option value="30">30 menit sebelumnya</option>
+                            <option value="60">1 jam sebelumnya</option>
+                            <option value="1440">1 hari sebelumnya</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">Tambah Pengingat</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <h2>Daftar PR Saya</h2>
+                <ul id="taskList" class="task-list">
+                    <!-- Daftar tugas akan dimuat di sini -->
+                    <li class="empty-state">Belum ada PR. Tambahkan PR pertama Anda!</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 MAN BARITO UTARA - Aplikasi Pengingat PR & Jadwal Pelajaran</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data jadwal pelajaran berdasarkan data terbaru yang diberikan
+            const scheduleData = {
+                days: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
+                times: [
+                    '06:30 - 07:15',
+                    '07:15 - 08:00',
+                    '08:00 - 08:45',
+                    '08:45 - 09:30',
+                    '09:30 - 09:45',
+                    '09:45 - 10:30',
+                    '10:30 - 11:15',
+                    '11:15 - 11:30',
+                    '11:30 - 12:15',
+                    '12:15 - 13:00',
+                    '13:00 - 13:45',
+                    '13:45 - 14:30',
+                    '14:30 - 14:45',
+                    '14:45 - 15:30',
+                    '15:30 - 16:15'
+                ],
+                subjects: [
+                    // Senin
+                    [
+                        { subject: 'Upacara', teacher: '' },
+                        { subject: 'Informatika', teacher: 'Putri Fadillah' },
+                        { subject: 'IPS Sejarah', teacher: 'Mariana, S.PD' },
+                        { subject: 'IPS Sejarah', teacher: 'Mariana, S.PD' },
+                        { subject: 'ISTIRAHAT 1', isBreak: true },
+                        { subject: 'IPA Kimia', teacher: 'Annisa Wahyuliani, S.PD' },
+                        { subject: 'IPA Kimia', teacher: 'Annisa Wahyuliani, S.PD' },
+                        { subject: 'ISTIRAHAT 2', isBreak: true },
+                        { subject: 'IPA Biologi', teacher: 'Indah Permata, S.PD' },
+                        { subject: 'IPA Biologi', teacher: 'Indah Permata, S.PD' },
+                        { subject: 'Tahfidz', teacher: 'Novita Prahesti, S.PD' },
+                        { subject: 'Tahfidz', teacher: 'Novita Prahesti, S.PD' },
+                        { subject: 'ISTIRAHAT 3', isBreak: true },
+                        { subject: 'Al Qur\'an Hadist', teacher: 'Muhibbah, S.Ag' },
+                        { subject: 'Al Qur\'an Hadist', teacher: 'Muhibbah, S.Ag' }
+                    ],
+                    // Selasa
+                    [
+                        { subject: 'Bahasa Indonesia', teacher: 'Iin Parlina, S.PD' },
+                        { subject: 'Bahasa Indonesia', teacher: 'Iin Parlina, S.PD' },
+                        { subject: 'Pendidikan Pancasila PKN', teacher: 'Abda Rani Puspitasari, S.PD' },
+                        { subject: 'Pendidikan Pancasila PKN', teacher: 'Abda Rani Puspitasari, S.PD' },
+                        { subject: 'ISTIRAHAT 1', isBreak: true },
+                        { subject: 'Sejarah', teacher: 'Amiratul Jannati, S.PD' },
+                        { subject: 'Sejarah', teacher: 'Amiratul Jannati, S.PD' },
+                        { subject: 'ISTIRAHAT 2', isBreak: true },
+                        { subject: 'Informatika', teacher: 'Putri Fadillah' },
+                        { subject: 'Matematika', teacher: 'Rizki Alam, S.PD' },
+                        { subject: 'Matematika', teacher: 'Rizki Alam, S.PD' },
+                        { subject: 'Matematika', teacher: 'Rizki Alam, S.PD' },
+                        { subject: 'ISTIRAHAT 3', isBreak: true },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' }
+                    ],
+                    // Rabu
+                    [
+                        { subject: 'Sejarah Kebudayaan Islam SKI', teacher: 'Vika Mayasari, S.PD' },
+                        { subject: 'Sejarah Kebudayaan Islam SKI', teacher: 'Vika Mayasari, S.PD' },
+                        { subject: 'Bahasa Arab', teacher: 'Abdul Bari, S.PD.I' },
+                        { subject: 'Bahasa Arab', teacher: 'Abdul Bari, S.PD.I' },
+                        { subject: 'ISTIRAHAT 1', isBreak: true },
+                        { subject: 'Akidah Akhlak', teacher: 'Norsam, S.Ag, M.PD.' },
+                        { subject: 'Akidah Akhlak', teacher: 'Norsam, S.Ag, M.PD.' },
+                        { subject: 'ISTIRAHAT 2', isBreak: true },
+                        { subject: 'IPS Geografi', teacher: 'Indra, S.PD' },
+                        { subject: 'IPS Geografi', teacher: 'Indra, S.PD' },
+                        { subject: 'Fikih', teacher: 'Muhibbah, S.Ag' },
+                        { subject: 'Fikih', teacher: 'Muhibbah, S.Ag' },
+                        { subject: 'ISTIRAHAT 3', isBreak: true },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' }
+                    ],
+                    // Kamis
+                    [
+                        { subject: 'Bahasa Inggris', teacher: 'Mariya Ulfah, S.Pd.I' },
+                        { subject: 'Bahasa Inggris', teacher: 'Mariya Ulfah, S.Pd.I' },
+                        { subject: 'Bahasa Inggris', teacher: 'Mariya Ulfah, S.Pd.I' },
+                        { subject: 'Bahasa Indonesia', teacher: 'Iin Parlina, S.Pd.' },
+                        { subject: 'ISTIRAHAT 1', isBreak: true },
+                        { subject: 'IPA Fisika', teacher: 'Indriana Wulansari, S.Pd' },
+                        { subject: 'IPA Fisika', teacher: 'Indriana Wulansari, S.Pd' },
+                        { subject: 'ISTIRAHAT 2', isBreak: true },
+                        { subject: 'Seni Budaya', teacher: 'Isnawati, S.Pd' },
+                        { subject: 'Seni Budaya', teacher: 'Isnawati, S.Pd' },
+                        { subject: 'IPS Ekonomi', teacher: 'Rahmawati, S.E' },
+                        { subject: 'IPS Ekonomi', teacher: 'Rahmawati, S.E' },
+                        { subject: 'ISTIRAHAT 3', isBreak: true },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' }
+                    ],
+                    // Jumat
+                    [
+                        { subject: 'PJOK', teacher: 'Jemy Arisman, S.Pd' },
+                        { subject: 'PJOK', teacher: 'Jemy Arisman, S.Pd' },
+                        { subject: 'IPS Sosiologi', teacher: 'Muhammad' },
+                        { subject: 'IPS Sosiologi', teacher: 'Muhammad' },
+                        { subject: 'ISTIRAHAT 1', isBreak: true },
+                        { subject: 'Bahasa Arab', teacher: 'Abdul Bari, S.Pd.I' },
+                        { subject: 'Bahasa Arab', teacher: 'Abdul Bari, S.Pd.I' },
+                        { subject: 'ISTIRAHAT 2', isBreak: true },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' },
+                        { subject: '', teacher: '' }
+                    ]
+                ]
+            };
+
+            // Elemen DOM
+            const taskForm = document.getElementById('taskForm');
+            const taskList = document.getElementById('taskList');
+            const notificationStatus = document.getElementById('notificationStatus');
+            const classSchedule = document.getElementById('classSchedule');
+            const daySelect = document.getElementById('day');
+            const subjectSelect = document.getElementById('subject');
+            const teacherInput = document.getElementById('teacher');
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Inisialisasi aplikasi
+            function initApp() {
+                setupTabs();
+                renderSchedule();
+                setupDaySubjectMapping();
+                requestNotificationPermission();
+                loadTasks();
+                setupFormHandler();
+                highlightCurrentClass();
+            }
+
+            // Setup tab navigation
+            function setupTabs() {
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabId = tab.getAttribute('data-tab');
+                        
+                        // Update active tab
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        // Show active content
+                        tabContents.forEach(content => content.classList.remove('active'));
+                        document.getElementById(tabId).classList.add('active');
+                    });
+                });
+            }
+
+            // Render jadwal pelajaran
+            function renderSchedule() {
+                let tableHTML = `
+                    <tr>
+                        <th>Waktu</th>
+                        ${scheduleData.days.map(day => `<th>${day}</th>`).join('')}
+                    </tr>
+                `;
+                
+                for (let i = 0; i < scheduleData.times.length; i++) {
+                    let rowClass = '';
+                    if (scheduleData.times[i].includes('ISTIRAHAT')) {
+                        rowClass = 'break-row';
+                    }
+                    
+                    tableHTML += `
+                        <tr class="${rowClass}">
+                            <td class="time-header">${scheduleData.times[i]}</td>
+                            ${scheduleData.days.map((day, dayIndex) => {
+                                const subject = scheduleData.subjects[dayIndex][i];
+                                if (!subject || !subject.subject) return '<td></td>';
+                                
+                                if (subject.isBreak) {
+                                    return `<td class="break-row">${subject.subject}</td>`;
+                                } else {
+                                    return `
+                                        <td class="subject-cell">
+                                            <div>${subject.subject}</div>
+                                            ${subject.teacher ? `<div class="teacher-name">${subject.teacher}</div>` : ''}
+                                        </td>
+                                    `;
+                                }
+                            }).join('')}
+                        </tr>
+                    `;
+                }
+                
+                classSchedule.innerHTML = tableHTML;
+            }
+
+            // Setup mapping hari dan mata pelajaran
+            function setupDaySubjectMapping() {
+                // Event listener untuk perubahan hari
+                daySelect.addEventListener('change', function() {
+                    const selectedDay = this.value;
+                    updateSubjectOptions(selectedDay);
+                });
+                
+                // Inisialisasi opsi mata pelajaran berdasarkan hari pertama
+                updateSubjectOptions(daySelect.value);
+            }
+
+            // Update opsi mata pelajaran berdasarkan hari yang dipilih
+            function updateSubjectOptions(day) {
+                // Kosongkan opsi sebelumnya
+                subjectSelect.innerHTML = '<option value="">Pilih Mata Pelajaran</option>';
+                
+                // Dapatkan indeks hari
+                const dayIndex = scheduleData.days.indexOf(day);
+                
+                // Kumpulkan semua mata pelajaran unik untuk hari tersebut
+                const subjectsSet = new Set();
+                const subjectTeacherMap = {};
+                
+                scheduleData.subjects[dayIndex].forEach(slot => {
+                    if (slot.subject && !slot.isBreak && slot.subject.trim() !== '') {
+                        subjectsSet.add(slot.subject);
+                        subjectTeacherMap[slot.subject] = slot.teacher;
+                    }
+                });
+                
+                // Tambahkan opsi ke select
+                subjectsSet.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    option.setAttribute('data-teacher', subjectTeacherMap[subject]);
+                    subjectSelect.appendChild(option);
+                });
+                
+                // Reset teacher input
+                teacherInput.value = '';
+            }
+
+            // Event listener untuk perubahan mata pelajaran
+            subjectSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const teacher = selectedOption.getAttribute('data-teacher') || '';
+                teacherInput.value = teacher;
+            });
+
+            // Minta izin notifikasi
+            function requestNotificationPermission() {
+                if ('Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        updateNotificationStatus('granted');
+                    } else if (Notification.permission === 'denied') {
+                        updateNotificationStatus('denied');
+                    } else {
+                        // Permintaan izin
+                        Notification.requestPermission().then(permission => {
+                            updateNotificationStatus(permission);
+                        });
+                    }
+                } else {
+                    notificationStatus.textContent = 'Browser tidak mendukung notifikasi';
+                    notificationStatus.className = 'notification-status notification-disabled';
+                }
+            }
+
+            // Perbarui status notifikasi
+            function updateNotificationStatus(permission) {
+                if (permission === 'granted') {
+                    notificationStatus.textContent = 'Notifikasi: Diizinkan';
+                    notificationStatus.className = 'notification-status notification-enabled';
+                } else {
+                    notificationStatus.textContent = 'Notifikasi: Belum Diizinkan';
+                    notificationStatus.className = 'notification-status notification-disabled';
+                }
+            }
+
+            // Setup form handler
+            function setupFormHandler() {
+                taskForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const day = document.getElementById('day').value;
+                    const subject = document.getElementById('subject').value;
+                    const teacher = document.getElementById('teacher').value;
+                    const description = document.getElementById('taskDescription').value;
+                    const dueDate = document.getElementById('dueDate').value;
+                    const dueTime = document.getElementById('dueTime').value;
+                    const priority = document.getElementById('priority').value;
+                    const reminderTime = parseInt(document.getElementById('reminderTime').value);
+                    
+                    // Validasi tanggal
+                    const dueDateTime = new Date(`${dueDate}T${dueTime}`);
+                    if (dueDateTime <= new Date()) {
+                        alert('Tanggal dan waktu pengumpulan harus di masa depan!');
+                        return;
+                    }
+                    
+                    // Hitung waktu notifikasi
+                    const reminderDateTime = new Date(dueDateTime.getTime() - (reminderTime * 60 * 1000));
+                    
+                    // Buat objek tugas
+                    const task = {
+                        id: Date.now(),
+                        day,
+                        subject,
+                        teacher,
+                        description,
+                        dueDate: dueDateTime.toISOString(),
+                        priority,
+                        reminderTime: reminderDateTime.toISOString(),
+                        completed: false
+                    };
+                    
+                    // Simpan tugas
+                    saveTask(task);
+                    
+                    // Jadwalkan notifikasi
+                    scheduleNotification(task);
+                    
+                    // Reset formulir
+                    taskForm.reset();
+                    updateSubjectOptions(daySelect.value);
+                    
+                    // Muat ulang daftar tugas
+                    loadTasks();
+                    
+                    alert('PR berhasil ditambahkan!');
+                });
+            }
+
+            // Simpan tugas ke localStorage
+            function saveTask(task) {
+                const tasks = getTasks();
+                tasks.push(task);
+                localStorage.setItem('schoolTasks', JSON.stringify(tasks));
+            }
+
+            // Ambil tugas dari localStorage
+            function getTasks() {
+                return JSON.parse(localStorage.getItem('schoolTasks')) || [];
+            }
+
+            // Muat dan tampilkan tugas
+            function loadTasks() {
+                const tasks = getTasks();
+                
+                if (tasks.length === 0) {
+                    taskList.innerHTML = '<li class="empty-state">Belum ada PR. Tambahkan PR pertama Anda!</li>';
+                    return;
+                }
+                
+                // Urutkan tugas berdasarkan tanggal jatuh tempo
+                tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+                
+                taskList.innerHTML = '';
+                
+                tasks.forEach(task => {
+                    const dueDate = new Date(task.dueDate);
+                    const now = new Date();
+                    const timeDiff = dueDate - now;
+                    
+                    // Tentukan kelas prioritas
+                    let priorityClass = '';
+                    if (task.priority === 'urgent') {
+                        priorityClass = 'urgent';
+                    } else if (task.priority === 'soon') {
+                        priorityClass = 'soon';
+                    }
+                    
+                    const taskItem = document.createElement('li');
+                    taskItem.className = `task-item ${priorityClass}`;
+                    taskItem.innerHTML = `
+                        <div class="task-info">
+                            <h3>${task.subject} - ${task.day}</h3>
+                            <div class="task-meta">
+                                <strong>Guru:</strong> ${task.teacher} | 
+                                <strong>Batas waktu:</strong> ${formatDateTime(dueDate)}
+                            </div>
+                            <div class="pr-details">
+                                <strong>Detail Tugas:</strong> ${task.description}
+                            </div>
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn btn-delete" onclick="deleteTask(${task.id})">Hapus</button>
+                        </div>
+                    `;
+                    
+                    taskList.appendChild(taskItem);
+                });
+            }
+
+            // Jadwalkan notifikasi
+            function scheduleNotification(task) {
+                if (Notification.permission !== 'granted') return;
+                
+                const reminderTime = new Date(task.reminderTime);
+                const now = new Date();
+                const timeUntilReminder = reminderTime - now;
+                
+                // Jika waktu pengingat sudah lewat, tidak perlu menjadwalkan
+                if (timeUntilReminder <= 0) return;
+                
+                setTimeout(() => {
+                    // Tampilkan notifikasi
+                    new Notification(`Pengingat PR: ${task.subject}`, {
+                        body: `PR ${task.subject} harus dikumpulkan pada ${formatDateTime(new Date(task.dueDate))}. Detail: ${task.description}`,
+                        icon: '/icon.png',
+                        tag: `pr-reminder-${task.id}`
+                    });
+                }, timeUntilReminder);
+            }
+
+            // Hapus tugas
+            window.deleteTask = function(taskId) {
+                if (confirm('Apakah Anda yakin ingin menghapus PR ini?')) {
+                    const tasks = getTasks();
+                    const updatedTasks = tasks.filter(task => task.id !== taskId);
+                    localStorage.setItem('schoolTasks', JSON.stringify(updatedTasks));
+                    loadTasks();
+                }
+            };
+
+            // Format tanggal dan waktu
+            function formatDateTime(date) {
+                return date.toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            // Jadwalkan ulang notifikasi untuk semua tugas yang ada
+            function rescheduleAllNotifications() {
+                const tasks = getTasks();
+                tasks.forEach(task => {
+                    scheduleNotification(task);
+                });
+            }
+
+            // Highlight kelas yang sedang berlangsung
+            function highlightCurrentClass() {
+                const now = new Date();
+                const currentDay = now.getDay() - 1; // 0 = Senin, 4 = Jumat
+                
+                // Hanya highlight jika hari sekolah (Senin-Jumat)
+                if (currentDay >= 0 && currentDay <= 4) {
+                    const currentTime = now.getHours() * 60 + now.getMinutes();
+                    
+                    // Cari slot waktu yang sesuai
+                    for (let i = 0; i < scheduleData.times.length; i++) {
+                        const timeRange = scheduleData.times[i];
+                        if (timeRange.includes('ISTIRAHAT')) continue;
+                        
+                        const [startTime, endTime] = timeRange.split(' - ');
+                        const [startHour, startMinute] = startTime.split(':').map(Number);
+                        const [endHour, endMinute] = endTime.split(':').map(Number);
+                        
+                        const startTotalMinutes = startHour * 60 + startMinute;
+                        const endTotalMinutes = endHour * 60 + endMinute;
+                        
+                        if (currentTime >= startTotalMinutes && currentTime <= endTotalMinutes) {
+                            // Highlight sel yang sesuai
+                            const rows = classSchedule.querySelectorAll('tr');
+                            if (rows[i + 1]) { // +1 karena baris pertama adalah header
+                                const cells = rows[i + 1].querySelectorAll('td');
+                                if (cells[currentDay + 1]) { // +1 karena kolom pertama adalah waktu
+                                    cells[currentDay + 1].classList.add('current-class');
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Inisialisasi aplikasi
+            initApp();
+        });
+    </script>
+</body>
+</html>
